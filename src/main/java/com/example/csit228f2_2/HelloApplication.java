@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,29 +106,62 @@ public class HelloApplication extends Application {
         hbSignIn.getChildren().add(btnSignIn);
         hbSignIn.setAlignment(Pos.CENTER);
         grid.add(hbSignIn, 0, 3, 2, 1);
-        final Text actionTarget = new Text("Hi");
-        actionTarget.setFont(Font.font(30));
-        grid.add(actionTarget, 1, 6);
-
+        final Text actionTarget = new Text();
+//        actionTarget.setFont(Font.font(30));
+//        grid.add(actionTarget, 1, 6);
         btnSignIn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 String username = tfUsername.getText();
                 String password = pfPassword.getText();
-                for (User user : users) {
-                    if (username.equals(user.username) && password.equals(user.password)) {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
-                        try {
-                            Scene scene = new Scene(loader.load());
-                            stage.setScene(scene);
-                            stage.show();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
+
+                try(Connection c = MySQLConnection.getConnection();
+                    PreparedStatement statement = c.prepareStatement(
+                            "INSERT INTO users (username, password) VALUES (?, ?)")) {
+
+                    statement.setString(1, username);
+                    statement.setString(2, password);
+                    int rowsInserted = statement.executeUpdate();
+
+                    if(rowsInserted > 0)
+                        System.out.println("inserted is himo'ed");
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-                actionTarget.setText("Invalid username/password");
-                actionTarget.setOpacity(1);
+            }
+        });
+
+
+        Button btnLogin = new Button("Login In");
+        btnSignIn.setFont(Font.font(45));
+        HBox hbLogin = new HBox();
+        hbLogin.getChildren().add(btnSignIn);
+        hbLogin.setAlignment(Pos.TOP_RIGHT);
+        grid.add(hbLogin, 0, 3, 2, 1);
+
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String username = tfUsername.getText();
+                String password = pfPassword.getText();
+
+//                CHECK SA USERNAME
+                try(Connection c = MySQLConnection.getConnection();
+                    Statement statement = c.createStatement()) {
+                    String selectQuery = "SELECT * FROM username";
+                    ResultSet resultSet = statement.executeQuery(selectQuery);
+                    while(resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String email = resultSet.getString("email");
+
+//                        if()
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+//                END SA CHACKUSERNAME
             }
         });
 
@@ -145,4 +179,6 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+
 }
