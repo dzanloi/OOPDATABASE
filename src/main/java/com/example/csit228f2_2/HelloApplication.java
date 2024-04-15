@@ -100,9 +100,12 @@ public class HelloApplication extends Application {
             }
         });
 
+        //SIR SERATO
         Button btnSignIn = new Button("Sign In");
         btnSignIn.setFont(Font.font(45));
+
         HBox hbSignIn = new HBox();
+
         hbSignIn.getChildren().add(btnSignIn);
         hbSignIn.setAlignment(Pos.CENTER);
         grid.add(hbSignIn, 0, 3, 2, 1);
@@ -130,40 +133,49 @@ public class HelloApplication extends Application {
                 }
             }
         });
+//        END SIR SERATO
 
 
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+        //ADD NUTTON NI JANLOI
         Button btnLogin = new Button("Login In");
         btnSignIn.setFont(Font.font(45));
-        HBox hbLogin = new HBox();
-        hbLogin.getChildren().add(btnSignIn);
-        hbLogin.setAlignment(Pos.TOP_RIGHT);
-        grid.add(hbLogin, 0, 3, 2, 1);
+        hbSignIn.getChildren().add(btnLogin);
+        hbSignIn.setAlignment(Pos.TOP_RIGHT);
 
         btnLogin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 String username = tfUsername.getText();
                 String password = pfPassword.getText();
-
-//                CHECK SA USERNAME
-                try(Connection c = MySQLConnection.getConnection();
-                    Statement statement = c.createStatement()) {
-                    String selectQuery = "SELECT * FROM username";
-                    ResultSet resultSet = statement.executeQuery(selectQuery);
-                    while(resultSet.next()) {
-                        int id = resultSet.getInt("id");
-                        String name = resultSet.getString("name");
-                        String email = resultSet.getString("email");
-
-//                        if()
+                for (User user : users) {
+                    if (username.equals(user.username) && password.equals(user.password)) {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+                        try {
+                            Scene scene = new Scene(loader.load());
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
-//                END SA CHACKUSERNAME
+                actionTarget.setText("Invalid username/password");
+                actionTarget.setOpacity(1);
             }
         });
+//        END ADDBUTTON NI JANL0OI
+
+
+
+
+
 
         EventHandler<KeyEvent> fieldChange = new EventHandler<KeyEvent>() {
             @Override
