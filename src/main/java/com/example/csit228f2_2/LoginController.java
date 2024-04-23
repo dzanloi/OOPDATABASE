@@ -11,9 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,14 +33,18 @@ public class LoginController {
 
     Window window;
 
-    public void login(ActionEvent actionEvent) {
+    public void login(ActionEvent actionEvent) throws SQLException {
+        Connection connection = MySQLConnection.getConnection();
+        connection.setAutoCommit(false);
+
         String username = tfusername.getText();
         String password = tfpassword.getText();
+
         for (User user : users) {
             if (username.equals(user.username) && password.equals(user.password)) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
                 try {
-                    Stage stage = (Stage) window.getScene().getWindow();
+                    Stage stage = (Stage) loginButton.getScene().getWindow();
                     stage.close();
 
                     Scene scene = new Scene(loader.load());
@@ -48,6 +55,8 @@ public class LoginController {
                 }
             }
         }
+
+        connection.commit();
     }
 
     @FXML
@@ -55,12 +64,12 @@ public class LoginController {
         Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.close();
 
-        Parent root = FXMLLoader.load(getClass().getResource("RegisterView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("RegisterPage.fxml"));
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.setTitle("Registration");
-        stage.getIcons().add(new Image("image/grapes.png"));
+//        stage.getIcons().add(new Image("image/grapes.png"));
         stage.show();
     }
 }
