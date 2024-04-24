@@ -55,7 +55,7 @@ public class RegisterController{
     }
 
     @FXML
-    public void register(ActionEvent actionEvent) throws SQLException {
+    public void register() throws SQLException {
         Connection connection = MySQLConnection.getConnection();
         connection.setAutoCommit(false);
 
@@ -73,19 +73,19 @@ public class RegisterController{
                 statement.setString(2, password);
                 int rowsInserted = statement.executeUpdate();
 
-//                IF SUCCESS ANG REGISTER POP UP MESSAGE
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("ZUCCESS");
-                alert.setHeaderText(null);
-                alert.setContentText("Rejister zuccessfulley");
-
-                if (rowsInserted > 0)
+                if (rowsInserted > 0) {
+                    connection.commit();
                     System.out.println("inserted is himo'ed");
 
-                connection.commit();
+                    // IF SUCCESS ANG REGISTER POP UP MESSAGE
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("ZUCCESS");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Rejister zuccessfulley");
 
-                //NISUD NA SA LOGIN PAGE AFTER REG
-                showLoginStage();
+                    //NISUD NA SA LOGIN PAGE AFTER REG
+                    showLoginStage();
+                }
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
             }
