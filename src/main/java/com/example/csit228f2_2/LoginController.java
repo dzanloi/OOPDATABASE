@@ -25,22 +25,24 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Sayopable{
     @FXML
-    private TextField tfusername;
+    public TextField tfusername;
 
     @FXML
-    private TextField tfpassword;
+    public TextField tfpassword;
 
     @FXML
     private Button loginButton;
 
+    public String username;
+    public String password;
     Window window;
 
     public void login() throws SQLException {
         Connection connection = MySQLConnection.getConnection();
         connection.setAutoCommit(false);
 
-        String username = tfusername.getText();
-        String password = tfpassword.getText();
+        username = tfusername.getText();
+        password = tfpassword.getText();
 
         //TODO FOR TOMORROW: Read from my database: carreonjavadb and read the username and password then log in if kit an in there.
 
