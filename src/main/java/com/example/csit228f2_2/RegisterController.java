@@ -23,7 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class RegisterController{
+public class RegisterController implements Sayopable{
 
     @FXML
     private TextField tfusername;
@@ -78,10 +78,7 @@ public class RegisterController{
                     System.out.println("inserted is himo'ed");
 
                     // IF SUCCESS ANG REGISTER POP UP MESSAGE
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("ZUCCESS");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Rejister zuccessfulley");
+                    showConfirmationMessage("REJISTER ZUCCESSFULLEY", "ZUCCESS");
 
                     //NISUD NA SA LOGIN PAGE AFTER REG
                     showLoginStage();
@@ -90,8 +87,33 @@ public class RegisterController{
                 e.printStackTrace();
             }
         } else {
+            showInformationMessage("Dapat pariha ang password ug confirm password", "PASSWORD NOT HTE SAME");
             tfconfirmPassword.requestFocus();
         }
 
+    }
+
+    @Override
+    public void showErrorMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @Override
+    public void showInformationMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @Override
+    public void showConfirmationMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

@@ -23,8 +23,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class LoginController {
-    public static List<User> users;
+public class LoginController implements Sayopable{
     @FXML
     private TextField tfusername;
 
@@ -43,8 +42,7 @@ public class LoginController {
         String username = tfusername.getText();
         String password = tfpassword.getText();
 
-        //TODO FOR TOMORROW: Read from my database: carreonjavadb and read the username and password then log in if found in there.
-        //Redirect me to my UD.fxml if i successfully logged in:
+        //TODO FOR TOMORROW: Read from my database: carreonjavadb and read the username and password then log in if kit an in there.
 
         try(Connection c = MySQLConnection.getConnection();
             PreparedStatement statement = c.prepareStatement(
@@ -61,9 +59,7 @@ public class LoginController {
                 //REDIRECT SA DASHBOARD AFTER LOGIN
                 showUD();
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setContentText("LOGIN FAYLED");
+                showErrorMessage("LOGGE'NT IN", "Logge'nt in");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -93,5 +89,29 @@ public class LoginController {
         stage.setScene(scene);
         stage.setTitle("CRUD Portfolio");
         stage.show();
+    }
+
+    @Override
+    public void showErrorMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @Override
+    public void showInformationMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @Override
+    public void showConfirmationMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
