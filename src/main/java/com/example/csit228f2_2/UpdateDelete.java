@@ -7,14 +7,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
 
 public class UpdateDelete implements Sayopable{
+    public Text userLabel;
     @FXML
     Button deleteButton;
+
+
 
     @FXML
     public void deleteAccount() throws SQLException {
@@ -25,7 +29,7 @@ public class UpdateDelete implements Sayopable{
             PreparedStatement statement = c.prepareStatement(
                     "DELETE FROM users WHERE userid = ?")) {
 
-            int userIdtoDel = 1;
+            int userIdtoDel = LoginController.userid;
             statement.setInt(1, userIdtoDel);
 
             int rowsDel = statement.executeUpdate();
@@ -80,4 +84,7 @@ public class UpdateDelete implements Sayopable{
         stage.show();
     }
 
+    public void setUsername(String username) {
+        userLabel.setText(username.toUpperCase());
+    }
 }

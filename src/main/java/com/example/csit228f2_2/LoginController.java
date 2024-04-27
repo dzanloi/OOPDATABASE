@@ -33,6 +33,8 @@ public class LoginController implements Sayopable{
     @FXML
     private Button loginButton;
 
+    public static int userid;
+
     public String username;
     public String password;
     Window window;
@@ -56,6 +58,7 @@ public class LoginController implements Sayopable{
             ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()) {
+                userid = resultSet.getInt("userid");
                 connection.commit();
 
                 //REDIRECT SA DASHBOARD AFTER LOGIN
@@ -86,8 +89,12 @@ public class LoginController implements Sayopable{
         Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.close();
 
-        Parent root = FXMLLoader.load(getClass().getResource("UD.fxml"));
-        Scene scene = new Scene(root);
+        FXMLLoader root = new FXMLLoader(getClass().getResource("UD.fxml"));
+        Scene scene = new Scene(root.load());
+
+        UpdateDelete updateDelete = root.getController();
+        updateDelete.setUsername(username);
+
         stage.setScene(scene);
         stage.setTitle("CRUD Portfolio");
         stage.show();

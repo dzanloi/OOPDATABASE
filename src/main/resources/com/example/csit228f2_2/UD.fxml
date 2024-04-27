@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228f2_2.UpdateDelete">
-    <right>
+    <ri>
         <AnchorPane prefHeight="400.0" prefWidth="300.0" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="deleteButton" layoutX="79.0" layoutY="328.0" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="32.0" prefWidth="143.0" style="-fx-background-color: #03DAC6; -fx-background-radius: 0px;" text="DELETE ACCOUNT" textFill="WHITE">
@@ -20,18 +20,18 @@
                 </Text>
             </children>
         </AnchorPane>
-    </right>
+    </ri>
    <center>
-        <AnchorPane prefHeight="400.0" prefWidth="182.0" style="-fx-background-color: #03DAC6;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="400.0" prefWidth="475.0" style="-fx-background-color: #03DAC6;" BorderPane.alignment="CENTER">
             <children>
                 <Text fill="WHITE" layoutX="12.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFILE" wrappingWidth="263.51171875">
                     <font>
                         <Font name="System Bold" size="35.0" />
                     </font>
                 </Text>
-                <Text fill="WHITE" layoutX="121.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Janloi">
+                <Text fx:id="userLabel" fill="WHITE" layoutX="121.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="25.0" />
                     </font>
                 </Text>
             </children>
