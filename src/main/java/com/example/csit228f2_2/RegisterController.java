@@ -97,6 +97,7 @@ public class RegisterController implements Sayopable{
     public void showErrorMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -105,6 +106,7 @@ public class RegisterController implements Sayopable{
     public void showInformationMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -113,6 +115,7 @@ public class RegisterController implements Sayopable{
     public void showConfirmationMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }

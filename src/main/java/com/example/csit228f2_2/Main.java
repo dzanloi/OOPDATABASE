@@ -15,6 +15,7 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.setTitle("Registration");
+        stage.setResizable(false);
 //        stage.getIcons().add(new Image("image/apple.png"));
         stage.show();
     }

@@ -1,5 +1,6 @@
 package com.example.csit228f2_2;
 
+import com.mysql.cj.log.Log;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,11 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Optional;
 
 public class UpdateDelete implements Sayopable{
     public Text userLabel;
@@ -45,10 +48,25 @@ public class UpdateDelete implements Sayopable{
 
     }
 
+    @FXML
+    public void logout() {
+        showConfirmationMessage("Logout?", "Logout ka?");
+        LoginController.username = null;
+        LoginController.userid = 0;
+        LoginController.password = null;
+
+        try {
+            showLoginStage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void showErrorMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -57,6 +75,7 @@ public class UpdateDelete implements Sayopable{
     public void showInformationMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -65,8 +84,15 @@ public class UpdateDelete implements Sayopable{
     public void showConfirmationMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            alert.showAndWait();
+        } else {
+            return;
+        }
     }
 
     @FXML
@@ -87,4 +113,6 @@ public class UpdateDelete implements Sayopable{
     public void setUsername(String username) {
         userLabel.setText(username.toUpperCase());
     }
+
+
 }

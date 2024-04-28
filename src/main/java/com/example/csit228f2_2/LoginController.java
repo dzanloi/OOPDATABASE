@@ -35,8 +35,8 @@ public class LoginController implements Sayopable{
 
     public static int userid;
 
-    public String username;
-    public String password;
+    public static String username;
+    public static String password;
     Window window;
 
     public void login() throws SQLException {
@@ -66,7 +66,7 @@ public class LoginController implements Sayopable{
             } else {
                 showErrorMessage("LOGGE'NT IN", "Logge'nt in");
             }
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -104,6 +104,7 @@ public class LoginController implements Sayopable{
     public void showErrorMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -112,6 +113,7 @@ public class LoginController implements Sayopable{
     public void showInformationMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
@@ -120,6 +122,7 @@ public class LoginController implements Sayopable{
     public void showConfirmationMessage(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
